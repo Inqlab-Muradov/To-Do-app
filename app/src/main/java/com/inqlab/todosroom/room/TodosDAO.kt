@@ -3,6 +3,7 @@ package com.inqlab.todosroom.room
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface  TodosDAO {
@@ -11,19 +12,18 @@ interface  TodosDAO {
     fun addTodos(todos: Todos)
 
     @Query("select * from todos_table")
-    suspend fun getAllTodos() : List<Todos>
+    fun getAllTodos() : Flow<List<Todos>>
 
     @Query("delete from todos_table where id=:todosID")
     fun deleteTodos(todosID : Int)
 
     @Query("update todos_table SET IsFav=:isfav where id = :todosID")
-
     fun updateTodos(isfav:Boolean,todosID: Int)
 
     @Query("select * from todos_table where IsFav=1")
-    suspend fun getAllTodosWithFav() : List<Todos>
+    fun getAllTodosWithFav() : Flow<List<Todos>>
 
     @Query("select * from todos_table where id=:todosID")
-    suspend fun getDetailTodos(todosID:Int) : Todos
+    fun getDetailTodos(todosID:Int) : Flow<Todos>
 
 }

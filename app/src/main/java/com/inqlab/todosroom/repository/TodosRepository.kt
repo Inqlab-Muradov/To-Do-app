@@ -2,6 +2,8 @@ package com.inqlab.todosroom.repository
 
 import com.inqlab.todosroom.room.Todos
 import com.inqlab.todosroom.room.TodosDAO
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class TodosRepository @Inject constructor(
@@ -12,7 +14,7 @@ class TodosRepository @Inject constructor(
         todosDAO.addTodos(todos)
     }
 
-    suspend fun  getAllTodos() = todosDAO.getAllTodos()
+    fun  getAllTodos() = todosDAO.getAllTodos().flowOn(Dispatchers.IO)
 
     fun deleteTodo(id : Int){
         todosDAO.deleteTodos(id)
@@ -21,8 +23,7 @@ class TodosRepository @Inject constructor(
     fun updateTodos(isfav:Boolean,id:Int){
         todosDAO.updateTodos(isfav,id)
     }
+    fun getCompletedTodos() = todosDAO.getAllTodosWithFav().flowOn(Dispatchers.IO)
 
-    suspend fun getCompletedTodos() = todosDAO.getAllTodosWithFav()
-
-    suspend fun getDetailTodo(id:Int) = todosDAO.getDetailTodos(id)
+    fun getDetailTodo(id:Int) = todosDAO.getDetailTodos(id).flowOn(Dispatchers.IO)
 }

@@ -8,6 +8,7 @@ import com.inqlab.todosroom.repository.TodosRepository
 import com.inqlab.todosroom.room.Todos
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,7 +21,9 @@ class CompletedViewModel @Inject constructor(
 
     fun getTodosWithFav(){
         viewModelScope.launch {
-            completedList.value =repository.getCompletedTodos()
+            repository.getCompletedTodos().collectLatest {
+                completedList.value = it
+            }
         }
     }
 

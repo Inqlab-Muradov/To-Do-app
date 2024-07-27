@@ -18,7 +18,7 @@ class AddFragment : BaseFragment<FragmentAddBinding>(FragmentAddBinding::inflate
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.close.setOnClickListener {
-            findNavController().navigate(AddFragmentDirections.actionAddFragmentToHomeFragment())
+            findNavController().popBackStack()
         }
 
         binding.createTaskButton.setOnClickListener {
@@ -30,7 +30,7 @@ class AddFragment : BaseFragment<FragmentAddBinding>(FragmentAddBinding::inflate
                 viewModel.addTodo(Todos(task = task, description = description, date = date, isFav = false))
                 findNavController().navigate(AddFragmentDirections.actionAddFragmentToHomeFragment())
             }else{
-                Toast.makeText(this.context,"Please fill tbe gaps",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this.context,"Please fill the gaps",Toast.LENGTH_SHORT).show()
             }
 
         }

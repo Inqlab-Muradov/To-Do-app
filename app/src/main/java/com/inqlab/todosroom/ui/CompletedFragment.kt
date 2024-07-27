@@ -28,7 +28,7 @@ class CompletedFragment : BaseFragment<FragmentCompletedBinding>(FragmentComplet
         binding.completedRV.adapter = completedAdapter
         observeData()
         binding.back.setOnClickListener {
-            findNavController().navigate(CompletedFragmentDirections.actionCompletedFragmentToHomeFragment())
+            findNavController().popBackStack()
         }
         completedAdapter.deleteItem={
             viewModel.updateCompletedTodo(false,it)

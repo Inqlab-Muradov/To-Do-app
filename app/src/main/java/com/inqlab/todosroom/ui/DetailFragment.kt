@@ -25,7 +25,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
         viewModel.getDetailTodo(args.id)
         observeData()
         binding.backToHome.setOnClickListener {
-            findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToHomeFragment())
+           findNavController().popBackStack()
         }
     }
 

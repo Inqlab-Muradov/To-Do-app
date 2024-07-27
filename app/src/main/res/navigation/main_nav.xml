@@ -53,7 +53,6 @@
         <action
             android:id="@+id/action_detailFragment_to_homeFragment"
             app:destination="@id/homeFragment"
-            app:popUpTo="@id/detailFragment"
-            app:popUpToInclusive="true" />
+             />
     </fragment>
 </navigation>

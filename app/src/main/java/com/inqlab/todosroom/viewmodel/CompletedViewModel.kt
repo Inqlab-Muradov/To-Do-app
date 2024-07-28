@@ -1,6 +1,5 @@
-package com.inqlab.todosroom.ViewModel
+package com.inqlab.todosroom.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,11 +14,11 @@ import javax.inject.Inject
 @HiltViewModel
 class CompletedViewModel @Inject constructor(
     val repository: TodosRepository
-) : ViewModel(){
+) : ViewModel() {
 
     val completedList = MutableLiveData<List<Todos>>()
 
-    fun getTodosWithFav(){
+    fun getTodosWithFav() {
         viewModelScope.launch {
             repository.getCompletedTodos().collectLatest {
                 completedList.value = it
@@ -27,10 +26,10 @@ class CompletedViewModel @Inject constructor(
         }
     }
 
-    fun updateCompletedTodo(isFav:Boolean,id:Int){
-       viewModelScope.launch(Dispatchers.IO) {
-           repository.updateTodos(isFav,id)
-           getTodosWithFav()
-       }
+    fun updateCompletedTodo(isFav: Boolean, id: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateTodos(isFav, id)
+            getTodosWithFav()
+        }
     }
 }

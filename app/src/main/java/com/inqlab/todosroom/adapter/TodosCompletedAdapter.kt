@@ -10,12 +10,14 @@ import com.inqlab.todosroom.room.Todos
 class TodosCompletedAdapter : RecyclerView.Adapter<TodosCompletedAdapter.CompletedViewHolder>() {
 
     private var completedList = ArrayList<Todos>()
-    lateinit var deleteItem:(Int)->Unit
+    lateinit var deleteItem: (Int) -> Unit
 
-    inner class CompletedViewHolder( val binding:TodosCompletedItemBinding):RecyclerView.ViewHolder(binding.root)
+    inner class CompletedViewHolder(val binding: TodosCompletedItemBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CompletedViewHolder {
-        val view = TodosCompletedItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val view =
+            TodosCompletedItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CompletedViewHolder(view)
     }
 
@@ -31,9 +33,9 @@ class TodosCompletedAdapter : RecyclerView.Adapter<TodosCompletedAdapter.Complet
         }
     }
 
-     fun updateList(newList:List<Todos>){
-         completedList.clear()
-         completedList.addAll(newList)
-         notifyDataSetChanged()
-     }
+    fun updateList(newList: List<Todos>) {
+        completedList.clear()
+        completedList.addAll(newList)
+        notifyDataSetChanged()
+    }
 }

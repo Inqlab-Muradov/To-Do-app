@@ -1,6 +1,5 @@
-package com.inqlab.todosroom.ViewModel
+package com.inqlab.todosroom.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,7 +9,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,7 +18,7 @@ class HomeViewModel @Inject constructor(
 
     val todosList = MutableLiveData<List<Todos>>()
 
-    fun getAllTodos(){
+    fun getAllTodos() {
         viewModelScope.launch {
             repository.getAllTodos().collectLatest {
                 todosList.value = it
@@ -29,15 +27,15 @@ class HomeViewModel @Inject constructor(
 
     }
 
-    fun deleteTodo(id:Int){
+    fun deleteTodo(id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteTodo(id)
             getAllTodos()
         }
     }
 
-    fun updateTodo(isfav:Boolean,id:Int){
-        viewModelScope.launch (Dispatchers.IO){
+    fun updateTodo(isfav: Boolean, id: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.updateTodos(isfav, id)
         }
     }

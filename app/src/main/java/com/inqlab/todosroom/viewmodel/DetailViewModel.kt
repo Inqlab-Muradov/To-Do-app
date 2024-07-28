@@ -1,4 +1,4 @@
-package com.inqlab.todosroom.ViewModel
+package com.inqlab.todosroom.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -6,10 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.inqlab.todosroom.repository.TodosRepository
 import com.inqlab.todosroom.room.Todos
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
@@ -19,7 +17,7 @@ class DetailViewModel @Inject constructor(
 ) : ViewModel() {
     val detailTodoList = MutableLiveData<Todos>()
 
-    fun getDetailTodo(id:Int){
+    fun getDetailTodo(id: Int) {
         viewModelScope.launch {
             repository.getDetailTodo(id).collectLatest {
                 detailTodoList.value = it

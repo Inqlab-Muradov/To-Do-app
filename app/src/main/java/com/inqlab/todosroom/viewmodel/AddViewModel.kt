@@ -1,4 +1,4 @@
-package com.inqlab.todosroom.ViewModel
+package com.inqlab.todosroom.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,8 +14,8 @@ class AddViewModel @Inject constructor(
     val repository: TodosRepository
 ) : ViewModel() {
 
-    fun addTodo(todos: Todos){
-        viewModelScope.launch (Dispatchers.IO){
+    fun addTodo(todos: Todos) {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.addTodo(todos)
         }
 

@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.inqlab.todosroom.ViewModel.HomeViewModel
+import com.inqlab.todosroom.viewmodel.HomeViewModel
 import com.inqlab.todosroom.adapter.TodosAdapter
 import com.inqlab.todosroom.base.BaseFragment
 import com.inqlab.todosroom.databinding.FragmentHomeBinding
@@ -15,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
-    private val viewModel by viewModels<HomeViewModel> ()
+    private val viewModel by viewModels<HomeViewModel>()
     private val todosAdapter = TodosAdapter()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -25,31 +25,40 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         viewModel.getAllTodos()
         binding.todosRv.adapter = todosAdapter
         observeData()
-        todosAdapter.deleteItem={
-            viewModel.deleteTodo(it)
-        }
-        todosAdapter.updateItem={
-            viewModel.updateTodo(true,it)
-        }
         binding.completedButton.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCompletedFragment())
         }
-        todosAdapter.onClick={
-            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(it))
-        }
+        adapterAction()
+
     }
 
-    private fun observeData(){
-        viewModel.todosList.observe(viewLifecycleOwner){
-            if (it.isEmpty()){
+    private fun observeData() {
+        viewModel.todosList.observe(viewLifecycleOwner) {
+            if (it.isEmpty()) {
                 todosAdapter.updateList(it)
                 binding.emptyText.visible()
-            }else{
+            } else {
                 todosAdapter.updateList(it)
                 binding.emptyText.invisible()
             }
         }
 
+    }
+
+    private fun adapterAction() {
+        todosAdapter.deleteItem = {
+            viewModel.deleteTodo(it)
+        }
+        todosAdapter.updateItem = {
+            viewModel.updateTodo(true, it)
+        }
+        todosAdapter.onClick = {
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToDetailFragment(
+                    it
+                )
+            )
+        }
     }
 
 }

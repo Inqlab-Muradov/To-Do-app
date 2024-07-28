@@ -17,14 +17,15 @@ object RoomModule {
 
     @Provides
     @Singleton
-    fun provideRoom(@ApplicationContext context: Context):TodosDatabase{
-        return Room.databaseBuilder(context,TodosDatabase::class.java,"TodosDb").fallbackToDestructiveMigration()
+    fun provideRoom(@ApplicationContext context: Context): TodosDatabase {
+        return Room.databaseBuilder(context, TodosDatabase::class.java, "TodosDb")
+            .fallbackToDestructiveMigration()
             .build()
     }
 
     @Provides
     @Singleton
-    fun provideDao(todosDatabase: TodosDatabase) : TodosDAO{
+    fun provideDao(todosDatabase: TodosDatabase): TodosDAO {
         return todosDatabase.getDao()
     }
 }
